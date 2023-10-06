@@ -83,20 +83,20 @@ Octal& Octal::operator =(Octal&& other) {
 
 // Arithmetic
 
-void addDigits(unsigned char& biggest, const unsigned char& smallest, unsigned char& inMind) {
+void Octal::addDigits(unsigned char& biggest, const unsigned char& smallest, unsigned char& inMind) {
         biggest += smallest + inMind - '0' * 3;
         inMind = biggest / 8 + '0';
         biggest = (biggest % 8) + '0';
 }
 
-void addSmallestToBiggest(OctalDigit* smallest, OctalDigit* biggest, 
+void Octal::addSmallestToBiggest(OctalDigit* smallest, OctalDigit* biggest, 
                             OctalDigit& inMind, size_t smallest_size) {
     for (size_t i = 0; i < smallest_size; ++i) {
         addDigits(biggest[i].c, smallest[i].c, inMind.c);
     }
 }
 
-void resizeArray(OctalDigit*& array, size_t size_old, size_t size_new) {
+void Octal::resizeArray(OctalDigit*& array, size_t size_old, size_t size_new) {
     if (size_old == size_new) {
         return;
     }
@@ -109,7 +109,7 @@ void resizeArray(OctalDigit*& array, size_t size_old, size_t size_new) {
     array = temp;
 }
 
-void addInMind(OctalDigit*& biggest, OctalDigit& inMind,
+void Octal::addInMind(OctalDigit*& biggest, OctalDigit& inMind,
                size_t start, size_t& biggest_size) {
     size_t i = start;
     while ((i < biggest_size) && (inMind != '0')) {
@@ -142,7 +142,7 @@ Octal Octal::operator +(const Octal& other) const {
     return temp; 
 }
 
-void substractOneFromOlders(OctalDigit*& biggest, size_t& i) {
+void Octal::substractOneFromOlders(OctalDigit*& biggest, size_t& i) {
     while (biggest[i + 1] == '0') {
         biggest[i + 1].c = '7';
         ++i;
@@ -150,7 +150,7 @@ void substractOneFromOlders(OctalDigit*& biggest, size_t& i) {
     biggest[i + 1].c -= 1;
 }
 
-void substractArrays(OctalDigit*& biggest, OctalDigit* const smallest, size_t smallest_size) {
+void Octal::substractArrays(OctalDigit*& biggest, OctalDigit* const smallest, size_t smallest_size) {
     size_t i = 0;
     while (i < smallest_size) {
         if (biggest[i].c < smallest[i].c) {
@@ -163,7 +163,7 @@ void substractArrays(OctalDigit*& biggest, OctalDigit* const smallest, size_t sm
     }
 }
 
-void resizeAfterSubstraction(OctalDigit*& array, size_t& size) {
+void Octal::resizeAfterSubstraction(OctalDigit*& array, size_t& size) {
     size_t size_new = size;
     while (array[size_new - 1].c == '0') {
         --size_new;
@@ -193,7 +193,7 @@ Octal Octal::operator -(const Octal& other) const {
 
 // Comparation
 
-bool sameArrays(OctalDigit* a, OctalDigit* b, size_t size) {
+bool Octal::sameArrays(OctalDigit* a, OctalDigit* b, size_t size) const {
     for (size_t i = 0; i < size; ++i) {
         if (a[i] != b[i]) {
             return false;
@@ -210,7 +210,7 @@ bool Octal::operator ==(const Octal& other) const {
     }
 }
 
-bool firstArrayLessThanSecond(OctalDigit* first, OctalDigit* second, size_t size) {
+bool Octal::firstArrayLessThanSecond(OctalDigit* first, OctalDigit* second, size_t size) const {
     for (size_t i = 0; i < size; ++i) {
         size_t index = size - i - 1;
         if (first[index] < second[index]) {

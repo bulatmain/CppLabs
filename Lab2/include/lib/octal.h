@@ -69,12 +69,39 @@ public:
 // Auxiliary
 
 private:
+// For operators= and constructors
 
     void copy(const Octal& other);
 
     void move(Octal&& other);
 
     void free();
+
+// For arithmetic
+
+    // Plus
+
+    void addDigits(unsigned char& biggest, const unsigned char& smallest, unsigned char& inMind);
+
+    void addSmallestToBiggest(OctalDigit* smallest, OctalDigit* biggest, OctalDigit& inMind, size_t smallest_size);
+
+    void resizeArray(OctalDigit*& array, size_t size_old, size_t size_new);
+
+    void addInMind(OctalDigit*& biggest, OctalDigit& inMind, size_t start, size_t& biggest_size);
+
+    // Minus
+
+    void substractOneFromOlders(OctalDigit*& biggest, size_t& i);
+
+    void substractArrays(OctalDigit*& biggest, OctalDigit* const smallest, size_t smallest_size);
+
+    void resizeAfterSubstraction(OctalDigit*& array, size_t& size);
+
+// For comparation
+
+    bool sameArrays(OctalDigit* a, OctalDigit* b, size_t size) const;
+
+    bool firstArrayLessThanSecond(OctalDigit* first, OctalDigit* second, size_t size) const;
 
 public:
 
