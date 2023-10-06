@@ -7,8 +7,8 @@
 // Constructor
 
 Octal::Octal() {
-    this->size = 1;
-    this->array = new OctalDigit[1];
+    size = 1;
+    array = new OctalDigit[1];
 }
 
 size_t sizeByNumber(size_t k) {
@@ -37,25 +37,25 @@ Octal::Octal(size_t n) {
 
 Octal::Octal(size_t size, const OctalDigit& d) {
     this->size = size;
-    this->array = new OctalDigit[size];
+    array = new OctalDigit[size];
     for (size_t i = 0; i < size; ++i) {
-        this->array[i] = d;
+        array[i] = d;
     }
 }
 
 Octal::Octal(const std::initializer_list<OctalDigit>& t) {
-    this->array = new OctalDigit[t.size()];
-    this->size = 0;
+    array = new OctalDigit[t.size()];
+    size = 0;
     for (const auto& d : t) {
-        this->array[t.size() - ++this->size] = d;
+        array[t.size() - ++size] = d;
     }
 }
 
 Octal::Octal(const std::string& t) {
-    this->array = new OctalDigit[t.size()];
-    this->size = 0;
+    array = new OctalDigit[t.size()];
+    size = 0;
     for (const auto& d : t) {
-        this->array[t.size() - ++this->size] = d;
+        array[t.size() - ++size] = d;
     }
 }
 
@@ -179,8 +179,8 @@ Octal& Octal::operator -=(const Octal& other) {
     if (*this < other) {
         throw std::invalid_argument("Argument must be less than object!\n");
     } else {
-        substractArrays(this->array, other.array, other.size);
-        resizeAfterSubstraction(this->array, this->size);
+        substractArrays(array, other.array, other.size);
+        resizeAfterSubstraction(array, size);
     }
     return *this;
 }
@@ -203,8 +203,8 @@ bool sameArrays(OctalDigit* a, OctalDigit* b, size_t size) {
 }
 
 bool Octal::operator ==(const Octal& other) const {
-    if (this->size == other.size) {
-        return sameArrays(this->array, other.array, this->size);
+    if (size == other.size) {
+        return sameArrays(array, other.array, size);
     } else {
         return false;
     }
@@ -221,10 +221,10 @@ bool firstArrayLessThanSecond(OctalDigit* first, OctalDigit* second, size_t size
 }
 
 bool Octal::operator <(const Octal& other) const {
-    if (this->size == other.size) {
-        return firstArrayLessThanSecond(this->array, other.array, this->size);
+    if (size == other.size) {
+        return firstArrayLessThanSecond(array, other.array, size);
     } else {
-        return this->size < other.size;
+        return size < other.size;
     }
 }
 
@@ -247,16 +247,16 @@ bool Octal::operator >=(const Octal& other) const {
 // Getters
 
 size_t Octal::length() const {
-    return this->size;
+    return size;
 }
 
 // Auxiliary
 
 void Octal::copy(const Octal& other) {
-    this->size = other.size;
-    this->array = new OctalDigit[size];
+    size = other.size;
+    array = new OctalDigit[size];
     for (size_t i = 0; i < other.size; ++i) {
-        this->array[i] = other.array[i];
+        array[i] = other.array[i];
     }
 }
 
@@ -269,7 +269,7 @@ void Octal::move(Octal&& other) {
 }
 
 void Octal::free() {
-    if (array == nullptr) {
+    if (array != nullptr) {
         delete array;
     }
     size = 0;
