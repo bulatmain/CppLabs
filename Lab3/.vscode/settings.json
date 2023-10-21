@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "tuple": "cpp",
+        "stdexcept": "cpp",
+        "initializer_list": "cpp",
+        "algorithm": "cpp"
+    }
+}
