@@ -1,9 +1,16 @@
 #include <iostream>
 #include "auxiliary/auxiliary.hpp"
 
+void run();
 
 int main() {
 
+    run();
+
+    return 0;
+}
+
+void run() {
     FigureArray<double> figures;
 
     int code = 0;
@@ -33,6 +40,4 @@ int main() {
             std::cout << "Invalid code.\n";
         }
     }
-
-    return 0;
 }

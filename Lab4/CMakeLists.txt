@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(lab4 LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD_REQUIRED 20)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_compile_options(-g)
 
 option(LAB4_TESTING "Включить модульное тестирование" ON)
 

@@ -181,7 +181,7 @@ bool flat_vector<T>::operator!= (const flat_vector<T>& other) const noexcept {
 
 template <Number T>
 T triangle_square(const flat_vector<T>& a, const flat_vector<T>& b) noexcept {
-    return ((a.x * b.y) - (a.y * b.x)) / 2;
+    return ((a.x * b.y) - (a.y * b.x)) / 2.0;
 }
 template <Number T>
 T angle(const flat_vector<T>& a, const flat_vector<T>& b) noexcept {

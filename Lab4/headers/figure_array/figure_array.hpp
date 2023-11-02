@@ -13,7 +13,7 @@ namespace lab4 {
     public:
         FigureArray();
         FigureArray(size_t size);
-        FigureArray(const std::initializer_list<T> &t);
+        FigureArray(const std::initializer_list<fshared_ptr<T>> &t);
         FigureArray(const FigureArray &other);
         FigureArray(FigureArray &&other) noexcept;
 
@@ -39,11 +39,11 @@ lab4::FigureArray<T>::FigureArray() : Array<lab4::fshared_ptr<T>>() {}
 template <Number T>
 lab4::FigureArray<T>::FigureArray(size_t size) : Array<lab4::fshared_ptr<T>>(size) {}
 template <Number T>
-lab4::FigureArray<T>::FigureArray(const std::initializer_list<T> &t) : Array<lab4::fshared_ptr<T>>(t) {}
+lab4::FigureArray<T>::FigureArray(const std::initializer_list<lab4::fshared_ptr<T>> &t) : Array<lab4::fshared_ptr<T>>(t) {}
 template <Number T>
 lab4::FigureArray<T>::FigureArray(const FigureArray &other) : Array<lab4::fshared_ptr<T>>(other) {}
 template <Number T>
-lab4::FigureArray<T>::FigureArray(FigureArray &&other) noexcept : Array<lab4::fshared_ptr<T>>(other) {}
+lab4::FigureArray<T>::FigureArray(FigureArray &&other) noexcept : Array<lab4::fshared_ptr<T>>(std::move(other)) {}
 
 template <Number T>
 lab4::FigureArray<T>& lab4::FigureArray<T>::operator=(const FigureArray<T>& other) {
@@ -69,15 +69,16 @@ T lab4::FigureArray<T>::summarySquare() const {
 
 template <Number T>
 void lab4::FigureArray<T>::eraseFigures(size_t l, size_t r) {
-    if (this->_size <= r) {
+    if (this->_size < r) {
         throw std::invalid_argument("Trying erase array's elements out of it's bounds");
     }
-    FigureArray<T> new_arr(this->_size - r - l - 1);
+    size_t d = r - l;
+    FigureArray<T> new_arr(this->_size - d);
     for (size_t i = 0; i < l; ++i) {
-        new_arr[i] =this-> _array[i];
+        new_arr[i] = this-> _array[i];
     }
-    for (size_t i = l; i < this->_size - r - l - 1; ++i) {
-        new_arr[i] = this->_array[i + r - l - 1];
+    for (size_t i = l; i < this->_size - d; ++i) {
+        new_arr[i] = this->_array[i + d];
     }
     *this = std::move(new_arr);
 }

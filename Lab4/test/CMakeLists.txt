@@ -26,7 +26,9 @@ option(GTEST_DISABLE_PTHREADS "" OFF)
 
 option(TEST_FLAT_VECTOR "" OFF)
 
-option (TEST_QUADRILATERAL "" ON)
+option(TEST_QUADRILATERAL "" OFF)
+
+option(TEST_FIGURE_ARRAY "" ON)
 
 OPTION_TURN_ON_TESTING(
     TEST_FLAT_VECTOR
@@ -46,3 +48,11 @@ OPTION_TURN_ON_TESTING(
     checkFigure
 )
 
+OPTION_TURN_ON_TESTING(
+    TEST_ARRAY
+    "Тестирование figure_array отключено\n"
+    figure_array-utest 
+    figure_array_test.cpp 
+    lab4::headers
+    checkFigureArray
+)

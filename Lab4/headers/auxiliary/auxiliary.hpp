@@ -41,7 +41,7 @@ void add_figure(FigureArray<T>& figures) {
 
 
 template <Number T>
-void calc_figure_func(const FigureArray<T>& figures) {
+void calc_figure_func(FigureArray<T>& figures) {
     size_t index = 0;
 
     std::cout << "Please, enter index of figure that you'd like to work with: ";
@@ -51,6 +51,7 @@ void calc_figure_func(const FigureArray<T>& figures) {
         std::cout << "Index is out of bounds!\n";
         return;
     }
+    auto figure_ptr = figures[index];
 
     int code = -1;
 
@@ -63,9 +64,9 @@ void calc_figure_func(const FigureArray<T>& figures) {
     std::cin >> code;
 
     if (code == 1) {
-        std::cout << "Geometric center of figure: " << figures[index]->geometricCenter() << "\n";
+        std::cout << "Geometric center of figure: " << figure_ptr->geometricCenter() << "\n";
     } else if (code == 2) {
-        std::cout << "Square of figure: " << double(*figures[index]) << "\n";
+        std::cout << "Square of figure: " << double(*figure_ptr) << "\n";
     } else {
         std::cout << "Invalid code.\n";
         return;
@@ -86,6 +87,7 @@ void delete_figure(FigureArray<T>& figures) {
 
     if (figures.size() <= index) {
         std::cout << "Index is out of bounds!\n";
+        return;
     }
 
     figures.eraseFigures(index, index + 1);

@@ -49,7 +49,7 @@ Array<T>::Array() : _size(0), _array{nullptr} {}
 
 template <Arrayable T>
 Array<T>::Array(size_t size) : _size(size) {
-    _array = std::make_shared<T[]>(size);
+    _array = std::shared_ptr<T[]>(new T[size]);
 }
 
 template <Arrayable T> 
@@ -63,7 +63,7 @@ Array<T>::Array(const std::initializer_list<T> &t) : Array(t.size()) {
 template <Arrayable T>
 void Array<T>::copy(const Array<T>& other) {
     _size = other._size;
-    _array = std::make_shared<T[]>(_size);
+    _array = std::shared_ptr<T[]>(new T[_size]);
 
     for (size_t i{0}; i < _size; ++i)
         _array[i] = other._array[i];
