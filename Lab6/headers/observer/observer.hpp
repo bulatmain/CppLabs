@@ -7,7 +7,7 @@
 namespace lab6 {
     class Observer {
     public:
-        virtual void update(lab6::NPC const* subject) = 0;
+        virtual void update(NPC const* subject) = 0;
     };
 };
 

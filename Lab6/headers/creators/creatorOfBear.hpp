@@ -14,15 +14,11 @@ namespace lab6 {
         void initialize(
             const std::string& name,
     	    point<size_t> pos,
-    	    double health,
-            double attackStrength,
             NPC* attackTarget
         );
         void construct(
             const std::string& name,
     	    point<size_t> pos,
-    	    double health,
-            double attackStrength,
             NPC* attackTarget
         );
     protected:
@@ -47,8 +43,6 @@ template <class Allocator>
 void lab6::CreatorOfBear<Allocator>::initialize(
             const std::string& name,
     	    point<size_t> pos,
-    	    double health,
-            double attackStrength,
             lab6::NPC* attackTarget 
 ) {
     if (npc == nullptr) {
@@ -58,8 +52,6 @@ void lab6::CreatorOfBear<Allocator>::initialize(
     lab6::Bear* bear = dynamic_cast<lab6::Bear*>(npc);
     traits::construct(allocator, &bear->name, name);
     traits::construct(allocator, &bear->pos, pos);
-    traits::construct(allocator, &bear->health, health);
-    traits::construct(allocator, &bear->attackStrength, attackStrength);
     traits::construct(allocator, &bear->attackTarget, attackTarget);
 }
 
@@ -67,16 +59,12 @@ template <class Allocator>
 void lab6::CreatorOfBear<Allocator>::construct(
             const std::string& name,
     	    point<size_t> pos,
-    	    double health,
-            double attackStrength,
             lab6::NPC* attackTarget 
 ) {
     createNPC();
     initialize(
         name,
         pos,
-        health,
-        attackStrength,
         attackTarget
     );
 }

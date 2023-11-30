@@ -12,6 +12,14 @@ namespace lab6 {
     class Bear;
     class Squirrel;
 
+    enum typesOfNPCs {
+        type_NPC,
+        type_AttackerNPC,
+        type_Ogre,
+        type_Bear, 
+        type_Squirrel
+    };
+
 // Visitor's
     class Visitor;
     class AttackVisitor;

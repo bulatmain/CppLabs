@@ -8,13 +8,18 @@
 namespace lab6 {
     class AttackerNPC : public NPC {
     public:
-	    double attackStrength;
 	    std::list<NPC*> potentialAttackTargets;
 	    NPC* attackTarget;
 
     public:
         virtual void accept(Visitor* v) = 0;
+
+        virtual typesOfNPCs identify();
     };
+}
+
+lab6::typesOfNPCs lab6::AttackerNPC::identify() {
+    return typesOfNPCs::type_AttackerNPC;
 }
 
 #endif

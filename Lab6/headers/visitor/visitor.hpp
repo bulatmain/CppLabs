@@ -10,9 +10,9 @@
 namespace lab6 {
     class Visitor {
     public:
-	    virtual void visitOgre(Ogre* ogre) const = 0;
-	    virtual void visitBear(Bear* bear) const = 0;
-	    virtual void visitSquirrel(Squirrel* squirrel) const = 0;
+	    virtual void visitOgre(Ogre* ogre) const {};
+	    virtual void visitBear(Bear* bear) const {};
+	    virtual void visitSquirrel(Squirrel* squirrel) const {};
     };
 };
 

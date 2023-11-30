@@ -13,13 +13,11 @@ namespace lab6 {
         virtual void createNPC();
         void initialize(
             const std::string& name,
-    	    point<size_t> pos,
-    	    double health
+    	    point<size_t> pos
         );
         void construct(
             const std::string& name,
-    	    point<size_t> pos,
-    	    double health
+    	    point<size_t> pos
         );
     protected:
         Allocator allocator;
@@ -42,8 +40,7 @@ void lab6::CreatorOfSquirrel<Allocator>::createNPC() {
 template <class Allocator>
 void lab6::CreatorOfSquirrel<Allocator>::initialize(
             const std::string& name,
-    	    point<size_t> pos,
-    	    double health
+    	    point<size_t> pos
 ) {
     if (npc == nullptr) {
         throw std::logic_error("Error: trying initialize not existing object\n");
@@ -52,20 +49,17 @@ void lab6::CreatorOfSquirrel<Allocator>::initialize(
     lab6::Squirrel* squirrel = dynamic_cast<lab6::Squirrel*>(npc);
     traits::construct(allocator, &squirrel->name, name);
     traits::construct(allocator, &squirrel->pos, pos);
-    traits::construct(allocator, &squirrel->health, health);
 }
 
 template <class Allocator>
 void lab6::CreatorOfSquirrel<Allocator>::construct(
             const std::string& name,
-    	    point<size_t> pos,
-    	    double health
+    	    point<size_t> pos
 ) {
     createNPC();
     initialize(
         name,
-        pos,
-        health
+        pos
     );
 }
 

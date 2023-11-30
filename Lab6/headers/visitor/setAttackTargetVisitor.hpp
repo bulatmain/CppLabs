@@ -23,6 +23,6 @@ void lab6::SetAttackTargetVisitor::setTarget(lab6::AttackerNPC* attacker, lab6::
         attacker->attackTarget = *(attacker->potentialAttackTargets.begin());
     }
 }
-    
+
 
 #endif

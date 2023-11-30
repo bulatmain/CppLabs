@@ -11,7 +11,13 @@ namespace lab6 {
         virtual void accept(Visitor* v) {
             v->visitSquirrel(this);
         }
+
+        virtual typesOfNPCs identify();
     };
 };
+
+lab6::typesOfNPCs lab6::Squirrel::identify() {
+    return typesOfNPCs::type_Squirrel;
+}
 
 #endif

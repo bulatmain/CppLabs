@@ -16,7 +16,6 @@ namespace lab6 {
     public:
     	std::string name;
     	point<size_t> pos;
-    	double health;
 
     	std::list<Observer*> observers;
 
@@ -28,6 +27,8 @@ namespace lab6 {
         virtual void notifyObservers() const;
 
     	virtual void accept(Visitor* v) = 0;
+
+        virtual typesOfNPCs identify();
     };
 
 };
@@ -44,6 +45,10 @@ void lab6::NPC::notifyObservers() const {
     for (auto const& observer : observers) {
         observer->update(this);
     }
+}
+
+lab6::typesOfNPCs lab6::NPC::identify() {
+    return typesOfNPCs::type_NPC;
 }
 
 

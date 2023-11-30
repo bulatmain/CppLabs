@@ -11,7 +11,14 @@ namespace lab6 {
         virtual void accept(Visitor* v) {
             v->visitOgre(this);
         }
+
+        virtual typesOfNPCs identify();
     };
 };
+
+
+lab6::typesOfNPCs lab6::Ogre::identify() {
+    return typesOfNPCs::type_Ogre;
+}
 
 #endif
