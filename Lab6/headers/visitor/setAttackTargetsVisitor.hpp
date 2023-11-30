@@ -14,14 +14,18 @@ namespace lab6 {
         SetAttackTargetsVisitor(container_ptr npcs, double attackDistance)
          : npcs(npcs), attackDistance(attackDistance) {}
 
-	    virtual void visitOgre(Ogre* ogre) const;
-	    virtual void visitBear(Bear* bear) const;
+	    virtual void visitOgre(Ogre* ogre);
+	    virtual void visitBear(Bear* bear);
+
+        virtual void setAttackDistance(double attackDistance) {
+            this->attackDistance = attackDistance; 
+        }
     
     protected:
         container_ptr npcs;
         double attackDistance;
 
-    	virtual void setAttackTargets(AttackerNPC* attacker) const;
+    	virtual void setAttackTargets(AttackerNPC* attacker);
 
     };
 };
@@ -30,19 +34,19 @@ namespace lab6 {
 
 template <template<typename> class T>
     requires lab6::Container<T<lab6::NPC*>>
-void lab6::SetAttackTargetsVisitor<T>::visitOgre(Ogre* ogre) const {
+void lab6::SetAttackTargetsVisitor<T>::visitOgre(Ogre* ogre) {
     setAttackTargets(ogre);
 }
 
 template <template<typename> class T>
     requires lab6::Container<T<lab6::NPC*>>
-void lab6::SetAttackTargetsVisitor<T>::visitBear(Bear* bear) const {
+void lab6::SetAttackTargetsVisitor<T>::visitBear(Bear* bear) {
     setAttackTargets(bear);
 }
 
 template <template<typename> class T>
     requires lab6::Container<T<lab6::NPC*>>
-void lab6::SetAttackTargetsVisitor<T>::setAttackTargets(lab6::AttackerNPC* attacker) const {
+void lab6::SetAttackTargetsVisitor<T>::setAttackTargets(lab6::AttackerNPC* attacker) {
     attacker->potentialAttackTargets.clear();
     for (auto const& potentialTarget : *npcs) {
         if (potentialTarget == attacker) {

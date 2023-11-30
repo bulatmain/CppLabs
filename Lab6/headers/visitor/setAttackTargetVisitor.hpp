@@ -6,35 +6,36 @@
 namespace lab6 {
     class SetAttackTargetVisitor : public Visitor {
     public:
-	    virtual void visitOgre(Ogre* ogre, NPC* target = nullptr) const;
-	    virtual void visitBear(Bear* bear, NPC* target = nullptr) const;
-	    virtual void visitOgre(Ogre* ogre) const;
-	    virtual void visitBear(Bear* bear) const;
+	    virtual void visitOgre(Ogre* ogre, NPC* target = nullptr);
+	    virtual void visitBear(Bear* bear, NPC* target = nullptr);
+        
+	    virtual void visitOgre(Ogre* ogre);
+	    virtual void visitBear(Bear* bear);
     
     protected:
-	    virtual void setTarget(AttackerNPC* attacker, NPC* target) const;
+	    virtual void setTarget(AttackerNPC* attacker, NPC* target);
     };
 }
 
 #include "npc/attackerNPC.hpp"
 
-void lab6::SetAttackTargetVisitor::visitOgre(lab6::Ogre* ogre) const {
+void lab6::SetAttackTargetVisitor::visitOgre(lab6::Ogre* ogre) {
     setTarget(ogre, nullptr);
 }
 
-void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear) const {
+void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear) {
     setTarget(bear, nullptr);
 }
 
-void lab6::SetAttackTargetVisitor::visitOgre(lab6::Ogre* ogre, lab6::NPC* target) const {
+void lab6::SetAttackTargetVisitor::visitOgre(lab6::Ogre* ogre, lab6::NPC* target) {
     setTarget(ogre, target);
 }
 
-void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear, lab6::NPC* target) const {
+void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear, lab6::NPC* target) {
     setTarget(bear, target);
 }
 
-void lab6::SetAttackTargetVisitor::setTarget(lab6::AttackerNPC* attacker, lab6::NPC* target) const {
+void lab6::SetAttackTargetVisitor::setTarget(lab6::AttackerNPC* attacker, lab6::NPC* target) {
     if (target != nullptr) {
         attacker->attackTarget = target;
     } else if (attacker->attackTarget == nullptr) {

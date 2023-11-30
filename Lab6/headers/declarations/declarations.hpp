@@ -24,8 +24,8 @@ namespace lab6 {
     };
 
     enum statusOfNPC {
-        DEAD,
         ALIVE,
+        DEAD,
         UNKNOWN
     };
 
@@ -41,6 +41,18 @@ namespace lab6 {
         }
     }
 
+    std::string statusToStr(statusOfNPC status) {
+        switch (status)
+        {
+        case ALIVE:
+            return "ALIVE";
+        case DEAD:
+            return "DEAD";
+        default:
+            return "UNKNOWN";
+        }
+    }
+
 // Visitor's
     class Visitor;
     class AttackVisitor;
@@ -50,8 +62,14 @@ namespace lab6 {
 
 // Observers'
     class Observer;
-    class StatePrinterObserver;
-    class SerializationObserver;
+    template <typename MessageBroker>
+    class EventWriterObserver;
+    template <typename MessageBroker>
+    class KillEventObserver;
+
+// Message brokers
+    class ConsoleMessageBroker;
+    class FileMessageBroker;
     
 // Creators
     template<class T, class U>

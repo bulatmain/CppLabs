@@ -8,8 +8,6 @@ namespace lab6 {
     template <typename MessageBroker>
     class KillEventObserver : public EventWriterObserver<MessageBroker>  {
     public:
-        KillEventObserver(const MessageBroker& messageBroker) 
-            : EventWriterObserver<MessageBroker>(messageBroker) {}
         KillEventObserver(MessageBroker&& messageBroker) 
             : EventWriterObserver<MessageBroker>(std::move(messageBroker)) {}
         virtual void update(NPC const* subject) {

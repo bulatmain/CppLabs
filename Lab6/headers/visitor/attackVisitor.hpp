@@ -7,12 +7,12 @@
 namespace lab6 {
     class AttackVisitor : public Visitor {
     public:
-	    virtual void visitOgre(Ogre* ogre) const;
-	    virtual void visitBear(Bear* bear) const; 
+	    virtual void visitOgre(Ogre* ogre);
+	    virtual void visitBear(Bear* bear); 
     protected:
-    	virtual void ogreAttack(Ogre* attacker, NPC* reciever) const;
-    	virtual void bearAttack(Bear* attacker, NPC* reciever) const;
-        virtual void killNPC(NPC* reciever) const;
+    	virtual void ogreAttack(Ogre* attacker, NPC* reciever);
+    	virtual void bearAttack(Bear* attacker, NPC* reciever);
+        virtual void killNPC(NPC* reciever);
 
     };
 }
@@ -20,15 +20,15 @@ namespace lab6 {
 #include "npc/ogre.hpp"
 #include "npc/bear.hpp"
 
-void lab6::AttackVisitor::visitOgre(Ogre* ogre) const {
+void lab6::AttackVisitor::visitOgre(Ogre* ogre) {
     ogreAttack(ogre, ogre->attackTarget);
 }
 
-void lab6::AttackVisitor::visitBear(Bear* bear) const {
+void lab6::AttackVisitor::visitBear(Bear* bear) {
     bearAttack(bear, bear->attackTarget);
 }
 
-void lab6::AttackVisitor::ogreAttack(lab6::Ogre* attacker, lab6::NPC* reciever) const {
+void lab6::AttackVisitor::ogreAttack(lab6::Ogre* attacker, lab6::NPC* reciever) {
     switch (reciever->identify())
     {
     case type_Ogre:
@@ -40,7 +40,7 @@ void lab6::AttackVisitor::ogreAttack(lab6::Ogre* attacker, lab6::NPC* reciever) 
     }
 }
 
-void lab6::AttackVisitor::bearAttack(lab6::Bear* attacker, lab6::NPC* reciever) const {
+void lab6::AttackVisitor::bearAttack(lab6::Bear* attacker, lab6::NPC* reciever) {
     switch (reciever->identify())
     {
     case type_Squirrel:
@@ -51,7 +51,7 @@ void lab6::AttackVisitor::bearAttack(lab6::Bear* attacker, lab6::NPC* reciever) 
     }
 }    
 
-void lab6::AttackVisitor::killNPC(NPC* reciever) const {
+void lab6::AttackVisitor::killNPC(NPC* reciever) {
     reciever->status = DEAD;
     reciever->notifyObservers();
 }

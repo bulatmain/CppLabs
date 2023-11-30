@@ -10,17 +10,18 @@ namespace lab6 {
     public:
         NPC* getNPC();
         virtual void createNPC() = 0;
-        // In derived define init(Args... args) and construct(Args... args).
+
     protected:
         NPC* npc = nullptr;
     
     protected:
-
         virtual void readName(std::string& name, std::ifstream& fin);
         virtual void readPos(point<size_t>& pos, std::ifstream& fin);
         virtual void readStatus(statusOfNPC& status, std::ifstream& fin);
 
     };
+
+    std::string trim(const std::string& str, const std::string& whitespace = " \n");
 };
 
 #include "npc/npc.hpp"
@@ -34,6 +35,7 @@ lab6::NPC* lab6::CreatorOfNPC::getNPC() {
 
 void lab6::CreatorOfNPC::readName(std::string& name, std::ifstream& fin) {
     std::getline(fin, name, '\n');
+    name = trim(name);
 }
 
 void lab6::CreatorOfNPC::readPos(point<size_t>& pos, std::ifstream& fin) {
@@ -44,6 +46,17 @@ void lab6::CreatorOfNPC::readStatus(statusOfNPC& status, std::ifstream& fin) {
     std::string statusString;
     fin >> statusString;
     status = strToStatus(statusString);
+}
+
+std::string lab6::trim(const std::string& str, const std::string& whitespace) {
+    const auto strBegin = str.find_first_not_of(whitespace);
+    if (strBegin == std::string::npos)
+        return ""; // no content
+
+    const auto strEnd = str.find_last_not_of(whitespace);
+    const auto strRange = strEnd - strBegin + 1;
+
+    return str.substr(strBegin, strRange);
 }
 
 #endif

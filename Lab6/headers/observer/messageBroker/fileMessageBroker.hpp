@@ -20,8 +20,15 @@ namespace lab6 {
         }
 
         FileMessageBroker(FileMessageBroker&& other) 
-        : fout(std::move(other.fout)), filename(other.filename) {
+            : fout(std::move(other.fout)), filename(std::move(other.filename)) {
             is_open_stream = fout.is_open();
+        }
+
+        FileMessageBroker& operator=(FileMessageBroker&& other) {
+            fout = std::move(other.fout);
+            filename = std::move(other.filename);
+            is_open_stream = fout.is_open();
+            return *this;
         }
 
         ~FileMessageBroker() {

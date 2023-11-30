@@ -7,9 +7,6 @@ namespace lab6 {
     template <typename MessageBroker>
     class EventWriterObserver : public Observer {
     public:
-        EventWriterObserver(const MessageBroker& messageBroker) :
-            messageBroker(messageBroker) {}
-
         EventWriterObserver(MessageBroker&& messageBroker) :
             messageBroker(std::move(messageBroker)) {}
 
