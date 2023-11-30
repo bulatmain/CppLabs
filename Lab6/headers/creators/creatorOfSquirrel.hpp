@@ -2,7 +2,6 @@
 #define CREATOR_OF_SQUIRREL
 
 #include <concepts>
-#include "declarations/declarations.h"
 #include "creators/creatorOfNPC.hpp"
 
 namespace lab6 { 
@@ -13,11 +12,13 @@ namespace lab6 {
         virtual void createNPC();
         void initialize(
             const std::string& name,
-    	    point<size_t> pos
+    	    point<size_t> pos,
+            statusOfNPC status
         );
         void construct(
             const std::string& name,
-    	    point<size_t> pos
+    	    point<size_t> pos,
+            statusOfNPC status
         );
     protected:
         Allocator allocator;
@@ -40,7 +41,8 @@ void lab6::CreatorOfSquirrel<Allocator>::createNPC() {
 template <class Allocator>
 void lab6::CreatorOfSquirrel<Allocator>::initialize(
             const std::string& name,
-    	    point<size_t> pos
+    	    point<size_t> pos,
+            statusOfNPC status
 ) {
     if (npc == nullptr) {
         throw std::logic_error("Error: trying initialize not existing object\n");
@@ -49,17 +51,20 @@ void lab6::CreatorOfSquirrel<Allocator>::initialize(
     lab6::Squirrel* squirrel = dynamic_cast<lab6::Squirrel*>(npc);
     traits::construct(allocator, &squirrel->name, name);
     traits::construct(allocator, &squirrel->pos, pos);
+    traits::construct(allocator, &squirrel->status, status);
 }
 
 template <class Allocator>
 void lab6::CreatorOfSquirrel<Allocator>::construct(
             const std::string& name,
-    	    point<size_t> pos
+    	    point<size_t> pos,
+            statusOfNPC status
 ) {
     createNPC();
     initialize(
         name,
-        pos
+        pos,
+        status
     );
 }
 

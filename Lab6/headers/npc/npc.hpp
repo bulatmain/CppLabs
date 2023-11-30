@@ -2,11 +2,10 @@
 
 #define NPC_HPP
 
-
 #include <list>
 #include <string>
 
-#include "declarations/declarations.h"
+#include "declarations/declarations.hpp"
 
 #include "auxiliry/point.hpp"
 #include "observer/observer.hpp"
@@ -16,6 +15,7 @@ namespace lab6 {
     public:
     	std::string name;
     	point<size_t> pos;
+        statusOfNPC status;
 
     	std::list<Observer*> observers;
 

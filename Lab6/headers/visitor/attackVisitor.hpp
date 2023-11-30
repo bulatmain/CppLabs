@@ -9,7 +9,6 @@ namespace lab6 {
     public:
 	    virtual void visitOgre(Ogre* ogre) const;
 	    virtual void visitBear(Bear* bear) const; 
-	    virtual void visitSquirrel(Squirrel* squirrel) const; 
     protected:
     	virtual void ogreAttack(Ogre* attacker, NPC* reciever) const;
     	virtual void bearAttack(Bear* attacker, NPC* reciever) const;
@@ -57,7 +56,7 @@ void lab6::AttackVisitor::bearAttack(lab6::Bear* attacker, lab6::NPC* reciever) 
 }    
 
 void lab6::AttackVisitor::killNPC(NPC* reciever) const {
-    
+    reciever->status = DEAD;
 }
 
 #endif

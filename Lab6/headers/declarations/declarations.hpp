@@ -3,6 +3,7 @@
 #define DECLARATIONS_H
 
 #include <memory>
+#include "declarations/container_traits.hpp"
 
 namespace lab6 {
 // NPC's
@@ -20,9 +21,16 @@ namespace lab6 {
         type_Squirrel
     };
 
+    enum statusOfNPC {
+        DEAD,
+        ALIVE
+    };
+
 // Visitor's
     class Visitor;
     class AttackVisitor;
+    template <template<typename> class T>
+        requires Container<T<NPC*>>
     class SetAttackTargetsVisitor;
 
 // Observers'

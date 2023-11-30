@@ -1,6 +1,5 @@
-#ifndef ATTACKVISITOR_HPP
-
-#define ATTACKVISITOR_HPP
+#ifndef SET_ATTACK_TARGET_HPP
+#define SET_ATTACK_TARGET_HPP
 
 #include "visitor/visitor.hpp"
 
@@ -9,6 +8,8 @@ namespace lab6 {
     public:
 	    virtual void visitOgre(Ogre* ogre, NPC* target = nullptr) const;
 	    virtual void visitBear(Bear* bear, NPC* target = nullptr) const;
+	    virtual void visitOgre(Ogre* ogre) const;
+	    virtual void visitBear(Bear* bear) const;
     
     protected:
 	    virtual void setTarget(AttackerNPC* attacker, NPC* target) const;
@@ -16,6 +17,23 @@ namespace lab6 {
 }
 
 #include "npc/attackerNPC.hpp"
+
+void lab6::SetAttackTargetVisitor::visitOgre(lab6::Ogre* ogre) const {
+    setTarget(ogre, nullptr);
+}
+
+void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear) const {
+    setTarget(bear, nullptr);
+}
+
+void lab6::SetAttackTargetVisitor::visitOgre(lab6::Ogre* ogre, lab6::NPC* target) const {
+    setTarget(ogre, target);
+}
+
+void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear, lab6::NPC* target) const {
+    setTarget(bear, target);
+}
+
 void lab6::SetAttackTargetVisitor::setTarget(lab6::AttackerNPC* attacker, lab6::NPC* target) const {
     if (target != nullptr) {
         attacker->attackTarget = target;
@@ -23,6 +41,5 @@ void lab6::SetAttackTargetVisitor::setTarget(lab6::AttackerNPC* attacker, lab6::
         attacker->attackTarget = *(attacker->potentialAttackTargets.begin());
     }
 }
-
 
 #endif

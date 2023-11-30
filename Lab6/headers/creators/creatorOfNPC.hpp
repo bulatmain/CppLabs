@@ -2,7 +2,7 @@
 
 #define CREATOR_OF_NPC
 
-#include "declarations/declarations.h"
+#include "declarations/declarations.hpp"
 
 namespace lab6 {
     class CreatorOfNPC {

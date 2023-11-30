@@ -2,7 +2,7 @@
 
 #define OBSERVER_HPP
 
-#include "declarations/declarations.h"
+#include "declarations/declarations.hpp"
 
 namespace lab6 {
     class Observer {

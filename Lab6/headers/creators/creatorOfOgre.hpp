@@ -2,7 +2,6 @@
 #define CREATOR_OF_OGRE
 
 #include <concepts>
-#include "declarations/declarations.h"
 #include "creators/creatorOfNPC.hpp"
 
 namespace lab6 { 
@@ -14,11 +13,13 @@ namespace lab6 {
         void initialize(
             const std::string& name,
     	    point<size_t> pos,
+            statusOfNPC status,
             NPC* attackTarget
         );
         void construct(
             const std::string& name,
     	    point<size_t> pos,
+            statusOfNPC status,
             NPC* attackTarget
         );
     protected:
@@ -43,6 +44,7 @@ template <class Allocator>
 void lab6::CreatorOfOgre<Allocator>::initialize(
             const std::string& name,
     	    point<size_t> pos,
+            statusOfNPC status,
             lab6::NPC* attackTarget 
 ) {
     if (npc == nullptr) {
@@ -52,6 +54,7 @@ void lab6::CreatorOfOgre<Allocator>::initialize(
     lab6::Ogre* ogre = static_cast<lab6::Ogre*>(npc);
     traits::construct(allocator, &ogre->name, name);
     traits::construct(allocator, &ogre->pos, pos);
+    traits::construct(allocator, &ogre->status, status);
     traits::construct(allocator, &ogre->attackTarget, attackTarget);
 }
 
@@ -59,12 +62,14 @@ template <class Allocator>
 void lab6::CreatorOfOgre<Allocator>::construct(
             const std::string& name,
     	    point<size_t> pos,
+            statusOfNPC status,
             lab6::NPC* attackTarget 
 ) {
     createNPC();
     initialize(
         name,
         pos,
+        status,
         attackTarget
     );
 }

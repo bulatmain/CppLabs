@@ -2,7 +2,6 @@
 
 #define ATTACKER_NPC_HPP
 
-#include "declarations/declarations.h"
 #include "npc/npc.hpp"
 
 namespace lab6 {

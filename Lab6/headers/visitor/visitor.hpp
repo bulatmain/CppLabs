@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "declarations/declarations.h"
+#include "declarations/declarations.hpp"
 #include "auxiliry/point.hpp"
 
 namespace lab6 {
