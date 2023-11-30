@@ -15,14 +15,11 @@ namespace lab6 {
 
 	    virtual void visitOgre(Ogre* ogre) const;
 	    virtual void visitBear(Bear* bear) const;
-	    virtual void visitSquirrel(Squirrel* squirrel) const; 
     
     protected:
         std::list<NPC*> npcs;
 
     	virtual void setAttackTargets(AttackerNPC* attacker) const;
-
-        std::list<NPC*>& getPotentialAttackTargetsOfAttackerNPC(AttackerNPC* anpc) const;
     };
 };
 

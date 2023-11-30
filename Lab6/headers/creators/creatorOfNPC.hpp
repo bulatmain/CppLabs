@@ -2,16 +2,15 @@
 
 #define CREATOR_OF_NPC
 
-#include <string>
 #include "declarations/declarations.h"
 
 namespace lab6 {
     class CreatorOfNPC {
     public:
         NPC* getNPC();
-        virtual NPC* createNPC() = 0;
+        virtual void createNPC() = 0;
         // In derived define init(Args... args) and construct(Args... args).
-    private:
+    protected:
         NPC* npc = nullptr;
     };
 };

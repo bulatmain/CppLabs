@@ -13,7 +13,7 @@
 
 namespace lab6 {
     class NPC {
-    protected:
+    public:
     	std::string name;
     	point<size_t> pos;
     	double health;
@@ -28,18 +28,6 @@ namespace lab6 {
         virtual void notifyObservers() const;
 
     	virtual void accept(Visitor* v) = 0;
-
-    	virtual std::string getName() const;
-    	virtual point<size_t> getPos() const;
-    	virtual double getHealth() const;
-
-        friend Visitor;
-        friend Observer;
-
-        friend class SetAttackTargetsVisitor;
-
-        friend class CreatorOfNPC;
-
     };
 
 };
@@ -57,19 +45,6 @@ void lab6::NPC::notifyObservers() const {
         observer->update(this);
     }
 }
-
-std::string lab6::NPC::getName() const {
-    return name;
-}
-
-lab6::point<size_t> lab6::NPC::getPos() const {
-    return pos;
-}
-
-double lab6::NPC::getHealth() const {
-    return health;
-}
-
 
 
 

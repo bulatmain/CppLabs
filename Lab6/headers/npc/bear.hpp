@@ -6,7 +6,8 @@
 #include "visitor/visitor.hpp"
 
 namespace lab6 {
-    class Bear : public NPC {
+    class Bear : public AttackerNPC {
+    public:
         virtual void accept(Visitor* v) {
             v->visitBear(this);
         }

@@ -7,6 +7,7 @@
 
 namespace lab6 {
     class Ogre : public AttackerNPC {
+    public:
         virtual void accept(Visitor* v) {
             v->visitOgre(this);
         }

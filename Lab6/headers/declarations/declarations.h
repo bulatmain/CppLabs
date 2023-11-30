@@ -2,6 +2,8 @@
 
 #define DECLARATIONS_H
 
+#include <memory>
+
 namespace lab6 {
 // NPC's
     class NPC;
@@ -21,10 +23,15 @@ namespace lab6 {
     class SerializationObserver;
     
 // Creators
+    template<class T, class U>
+    concept Derived = std::is_base_of<U, T>::value;
+
     class CreatorOfNPC;
-    class CreatorOfAttackNPC;
+    template <class Allocator>
     class CreatorOfOgre;
+    template <class Allocator>
     class CreatorOfBear;
+    template <class Allocator>
     class CreatorOfSquirrel;
 
 }
