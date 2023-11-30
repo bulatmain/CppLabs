@@ -2,14 +2,11 @@
 
 #define POINT_H
 
-#include <type_traits>
-#include <stdexcept>
-#include <concepts>
 #include <cmath>
 
+#include "declarations/declarations.hpp"
+
 namespace lab6 {
-    template <typename T>
-    concept Number = std::is_integral_v<T> || std::is_floating_point_v<T>;
 
     template <Number T>
     struct point {

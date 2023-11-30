@@ -10,6 +10,7 @@ namespace lab6 {
     public:
         CreatorOfSquirrel() = default;
         virtual void createNPC();
+        void readFromFile(const std::string& filename);
         void initialize(
             const std::string& name,
     	    point<size_t> pos,
@@ -25,10 +26,60 @@ namespace lab6 {
     private:
         CreatorOfSquirrel(const CreatorOfSquirrel&);
         CreatorOfSquirrel& operator=(const CreatorOfSquirrel&);
+
+        void readVariables(
+            std::string& name,
+            point<size_t>& pos,
+            statusOfNPC& status,
+            const std::string& filename
+        );
+
     };  
 };
 
 #include "npc/squirrel.hpp"
+
+template <class Allocator>
+void lab6::CreatorOfSquirrel<Allocator>::readFromFile(const std::string& filename) {
+    std::string name;
+    point<size_t> pos;
+    statusOfNPC status;
+    readVariables(name, pos, status, filename);
+    construct(name, pos, status);
+}
+
+template <class Allocator>
+void lab6::CreatorOfSquirrel<Allocator>::readVariables(
+            std::string& name,
+            point<size_t>& pos,
+            statusOfNPC& status,
+            const std::string& filename
+) {
+    try {
+        std::ifstream fin(filename);
+        readName(name, fin);
+        readPos(pos, fin);
+        readStatus(status, fin);
+    } catch(const std::ios_base::failure& e) {
+        throw std::runtime_error("Error: can not open file " + filename + "\n");
+    } catch(const std::runtime_error& e) {
+        throw e;
+    }
+}
+
+template <class Allocator>
+void lab6::CreatorOfSquirrel<Allocator>::construct(
+            const std::string& name,
+    	    point<size_t> pos,
+            statusOfNPC status
+) {
+    createNPC();
+    initialize(
+        name,
+        pos,
+        status
+    );
+}
 
 template <class Allocator>
 void lab6::CreatorOfSquirrel<Allocator>::createNPC() {
@@ -52,20 +103,6 @@ void lab6::CreatorOfSquirrel<Allocator>::initialize(
     traits::construct(allocator, &squirrel->name, name);
     traits::construct(allocator, &squirrel->pos, pos);
     traits::construct(allocator, &squirrel->status, status);
-}
-
-template <class Allocator>
-void lab6::CreatorOfSquirrel<Allocator>::construct(
-            const std::string& name,
-    	    point<size_t> pos,
-            statusOfNPC status
-) {
-    createNPC();
-    initialize(
-        name,
-        pos,
-        status
-    );
 }
 
 #endif

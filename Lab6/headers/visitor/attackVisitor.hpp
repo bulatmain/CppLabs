@@ -22,14 +22,10 @@ namespace lab6 {
 
 void lab6::AttackVisitor::visitOgre(Ogre* ogre) const {
     ogreAttack(ogre, ogre->attackTarget);
-    ogre->notifyObservers();
-    ogre->attackTarget->notifyObservers();
 }
 
 void lab6::AttackVisitor::visitBear(Bear* bear) const {
     bearAttack(bear, bear->attackTarget);
-    bear->notifyObservers();
-    bear->attackTarget->notifyObservers();
 }
 
 void lab6::AttackVisitor::ogreAttack(lab6::Ogre* attacker, lab6::NPC* reciever) const {
@@ -57,6 +53,7 @@ void lab6::AttackVisitor::bearAttack(lab6::Bear* attacker, lab6::NPC* reciever) 
 
 void lab6::AttackVisitor::killNPC(NPC* reciever) const {
     reciever->status = DEAD;
+    reciever->notifyObservers();
 }
 
 #endif

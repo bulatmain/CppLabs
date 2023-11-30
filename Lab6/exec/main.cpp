@@ -6,30 +6,45 @@
 #include "visitor/attackVisitor.hpp"
 #include "visitor/setAttackTargetsVisitor.hpp"
 #include "visitor/setAttackTargetVisitor.hpp"
+#include "observer/killEventObserver.hpp"
+#include "observer/messageBroker/fileMessageBroker.hpp"
+#include "observer/messageBroker/consoleMessageBroker.hpp"
 #include "auxiliry/point.hpp"
 using namespace lab6;
 
 int main() {
+
+    FileMessageBroker fmb("killsStatus.txt");
+    ConsoleMessageBroker cmb;
+
+    KillEventObserver<FileMessageBroker> keo_file(std::move(fmb));
+    KillEventObserver<ConsoleMessageBroker> keo_console(std::move(cmb));
+
     std::list<NPC*> npcs;
 
+    SetAttackTargetsVisitor<std::list> setAttackTargetsVisitor(
+        &npcs,
+        10
+    );
+    SetAttackTargetVisitor setAttackTargetVisitor;
+    AttackVisitor av;
+
+
     CreatorOfSquirrel cs;
-    cs.construct("Sq", {1, 2}, ALIVE);
+    cs.readFromFile("squirrel_file");
     NPC* sq = cs.getNPC();
 
-
     CreatorOfBear cb;
-    cb.construct("Bear", {2, 2}, ALIVE, nullptr);
+    cb.readFromFile("bear_file");
     NPC* bear = cb.getNPC();
 
     npcs.emplace_back(sq);
     npcs.emplace_back(bear);
 
-    SetAttackTargetsVisitor<std::list> setAttackTargetsVisitor(
-        &npcs, 
-        10
-    );
-    SetAttackTargetVisitor setAttackTargetVisitor;
-    AttackVisitor av;
+    for (auto& npc : npcs) {
+        npc->attachObserver(&keo_file);
+        npc->attachObserver(&keo_console);
+    }
 
     for (auto& npc : npcs) {
         npc->accept(&setAttackTargetsVisitor);
@@ -42,8 +57,6 @@ int main() {
     for (auto& npc : npcs) {
         npc->accept(&av);
     }
-
-    std::cout << sq->status << "\n";
     
     return 0;
 }
