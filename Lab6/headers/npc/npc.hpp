@@ -29,6 +29,8 @@ namespace lab6 {
     	virtual void accept(Visitor* v) = 0;
 
         virtual typesOfNPCs identify();
+
+        virtual ~NPC() = 0;
     };
 
 };
@@ -51,7 +53,6 @@ lab6::typesOfNPCs lab6::NPC::identify() {
     return typesOfNPCs::type_NPC;
 }
 
-
-
+lab6::NPC::~NPC() {}
 
 #endif

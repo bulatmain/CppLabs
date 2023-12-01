@@ -14,11 +14,16 @@ namespace lab6 {
         virtual void accept(Visitor* v) = 0;
 
         virtual typesOfNPCs identify();
+
+        virtual ~AttackerNPC() = 0;
     };
 }
 
 lab6::typesOfNPCs lab6::AttackerNPC::identify() {
     return typesOfNPCs::type_AttackerNPC;
 }
+
+
+lab6::AttackerNPC::~AttackerNPC() {}
 
 #endif

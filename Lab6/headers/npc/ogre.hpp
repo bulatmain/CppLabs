@@ -13,6 +13,8 @@ namespace lab6 {
         }
 
         virtual typesOfNPCs identify();
+
+        ~Ogre() {};
     };
 };
 

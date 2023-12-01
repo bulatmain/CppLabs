@@ -38,8 +38,12 @@ void lab6::SetAttackTargetVisitor::visitBear(lab6::Bear* bear, lab6::NPC* target
 void lab6::SetAttackTargetVisitor::setTarget(lab6::AttackerNPC* attacker, lab6::NPC* target) {
     if (target != nullptr) {
         attacker->attackTarget = target;
-    } else if (attacker->attackTarget == nullptr) {
-        attacker->attackTarget = *(attacker->potentialAttackTargets.begin());
+    } else {
+        auto& pot_targets = attacker->potentialAttackTargets;
+        if (attacker->attackTarget == nullptr &&
+               pot_targets.begin() != pot_targets.end()) {
+            attacker->attackTarget = *(pot_targets.begin());
+        }
     }
 }
 

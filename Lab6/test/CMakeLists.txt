@@ -23,3 +23,12 @@ function(OPTION_TURN_ON_TESTING
 endfunction()
 
 option(GTEST_DISABLE_PTHREADS "" OFF)
+
+OPTION_TURN_ON_TESTING(
+    ON
+    ""
+    test
+    tests.cpp
+    lab6::headers
+    check
+)

@@ -27,6 +27,11 @@ namespace lab6 {
         Redactor(const std::string& logFileName) 
             : fmb(logFileName), keo_file(std::move(fmb)), keo_cons(std::move(cmb)), setTargetsVisitor(&npcs, 0) {}
 
+        ~Redactor() {
+            for (auto npc : npcs) {
+                delete npc;
+            }
+        }
         void launch();
 
     private:
@@ -215,21 +220,15 @@ void lab6::Redactor::setAttackDistance() {
 
 
 void lab6::Redactor::setFightMode() {
-    std::cout << "Setting targets in attack range...\n";
     for (auto npc : npcs) {
-        std::cout << npc->name << "\n";
         npc->accept(&setTargetsVisitor);
     }
 
-    std::cout << "Setting attack tergets...\n";
     for (auto npc : npcs) {
-        std::cout << npc->name << "\n";
         npc->accept(&setAttackTargetVisitor);
     }
 
-    std::cout << "Attacking...\n";
     for (auto npc : npcs) {
-        std::cout << npc->name << "\n";
         npc->accept(&attackVisitor);
     }
 
@@ -243,8 +242,6 @@ void lab6::Redactor::setFightMode() {
     for (auto& npc : dead) {
         npcs.erase(std::find(npcs.begin(), npcs.end(), npc));
     }
-
-    std::cout << "Fight has ended!\n";
 }
 
 void lab6::Redactor::createNPCFromCode(size_t code_int, const std::string& name, const point<size_t>& pos) {
