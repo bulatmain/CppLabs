@@ -68,9 +68,7 @@ namespace lab7 {
     class KillEventObserver;
 
 // Message brokers
-    template <class mutex_type>
     class ConsoleMessageBroker;
-    template <class mutex_type>
     class FileMessageBroker;
     
 // Creators
