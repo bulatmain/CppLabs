@@ -15,15 +15,12 @@ namespace lab7 {
 
         virtual typesOfNPCs identify();
 
-        virtual ~AttackerNPC() = 0;
+        ~AttackerNPC() {};
     };
 }
 
 lab7::typesOfNPCs lab7::AttackerNPC::identify() {
     return typesOfNPCs::type_AttackerNPC;
 }
-
-
-lab7::AttackerNPC::~AttackerNPC() {}
 
 #endif
