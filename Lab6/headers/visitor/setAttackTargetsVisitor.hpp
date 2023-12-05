@@ -7,11 +7,11 @@
 namespace lab6 {
     template <template<typename> class T>
         requires Container<T<NPC*>>
-    class SetAttackTargetsVisitor : public Visitor {
+    class SetNPCsInAttackRangeVisitor : public Visitor {
     public:
         using container_type = T<NPC*>;
         using container_ptr = T<NPC*> const*;
-        SetAttackTargetsVisitor(container_ptr npcs, double attackDistance)
+        SetNPCsInAttackRangeVisitor(container_ptr npcs, double attackDistance)
          : npcs(npcs), attackDistance(attackDistance) {}
 
 	    virtual void visitOgre(Ogre* ogre);
@@ -34,19 +34,19 @@ namespace lab6 {
 
 template <template<typename> class T>
     requires lab6::Container<T<lab6::NPC*>>
-void lab6::SetAttackTargetsVisitor<T>::visitOgre(Ogre* ogre) {
+void lab6::SetNPCsInAttackRangeVisitor<T>::visitOgre(Ogre* ogre) {
     setAttackTargets(ogre);
 }
 
 template <template<typename> class T>
     requires lab6::Container<T<lab6::NPC*>>
-void lab6::SetAttackTargetsVisitor<T>::visitBear(Bear* bear) {
+void lab6::SetNPCsInAttackRangeVisitor<T>::visitBear(Bear* bear) {
     setAttackTargets(bear);
 }
 
 template <template<typename> class T>
     requires lab6::Container<T<lab6::NPC*>>
-void lab6::SetAttackTargetsVisitor<T>::setAttackTargets(lab6::AttackerNPC* attacker) {
+void lab6::SetNPCsInAttackRangeVisitor<T>::setAttackTargets(lab6::AttackerNPC* attacker) {
     attacker->potentialAttackTargets.clear();
     for (auto const& potentialTarget : *npcs) {
         if (potentialTarget == attacker) {

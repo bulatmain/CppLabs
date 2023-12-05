@@ -58,7 +58,7 @@ namespace lab6 {
     class AttackVisitor;
     template <template<typename> class T>
         requires Container<T<NPC*>>
-    class SetAttackTargetsVisitor;
+    class SetNPCsInAttackRangeVisitor;
 
 // Observers'
     class Observer;

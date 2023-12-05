@@ -25,7 +25,7 @@ TEST(CreatorOfNPC, CreateFromArguments) {
     ASSERT_TRUE(bear->status == ALIVE);
 }
 
-TEST(Visitor, SetAttackTargetsVisitor) {
+TEST(Visitor, SetNPCsInAttackRangeVisitor) {
     CreatorOfOgre creatorOfOgre;
     creatorOfOgre.readFromFile("ogre_file");
     NPC* ogre = creatorOfOgre.getNPC();
@@ -42,7 +42,7 @@ TEST(Visitor, SetAttackTargetsVisitor) {
 
     std::list<NPC*> npcs = {ogre, bear, squirrel};
 
-    SetAttackTargetsVisitor<std::list> setAttacKTargetsVisitor(&npcs, 10);
+    SetNPCsInAttackRangeVisitor<std::list> setAttacKTargetsVisitor(&npcs, 10);
 
     for (auto npc : npcs) {
         npc->accept(&setAttacKTargetsVisitor);
@@ -57,7 +57,7 @@ TEST(Visitor, SetAttackTargetsVisitor) {
 }
 
 TEST(Visitor, SetAttackTrgetVisitor) {
-        CreatorOfOgre creatorOfOgre;
+    CreatorOfOgre creatorOfOgre;
     creatorOfOgre.readFromFile("ogre_file");
     NPC* ogre = creatorOfOgre.getNPC();
 
@@ -73,7 +73,7 @@ TEST(Visitor, SetAttackTrgetVisitor) {
 
     std::list<NPC*> npcs = {ogre, bear, squirrel};
 
-    SetAttackTargetsVisitor<std::list> setAttacKTargetsVisitor(&npcs, 10);
+    SetNPCsInAttackRangeVisitor<std::list> setAttacKTargetsVisitor(&npcs, 10);
 
     for (auto npc : npcs) {
         npc->accept(&setAttacKTargetsVisitor);
@@ -88,10 +88,8 @@ TEST(Visitor, SetAttackTrgetVisitor) {
     AttackerNPC* aOgre = dynamic_cast<AttackerNPC*>(ogre);
     AttackerNPC* aBear = dynamic_cast<AttackerNPC*>(bear);
 
-    std::cout << aBear->attackTarget->name << "\n";
-
     ASSERT_TRUE(aOgre->attackTarget == bear);
-    ASSERT_TRUE(aBear->attackTarget == squirrel);
+    ASSERT_TRUE(aBear->attackTarget == ogre);
 }
 
 int main(int argc, char** argv) {

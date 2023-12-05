@@ -78,7 +78,7 @@ namespace lab6 {
 
         std::list<NPC*> npcs;
 
-        SetAttackTargetsVisitor<std::list> setTargetsVisitor;
+        SetNPCsInAttackRangeVisitor<std::list> setTargetsVisitor;
         SetAttackTargetVisitor setAttackTargetVisitor;
         AttackVisitor attackVisitor;
 
