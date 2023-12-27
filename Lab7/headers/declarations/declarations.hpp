@@ -15,9 +15,10 @@ namespace lab7 {
     class Bear;
     class Squirrel;
 
+    using npc_ptr = std::shared_ptr<NPC>;
+
     enum typesOfNPCs {
         type_NPC,
-        type_AttackerNPC,
         type_Ogre,
         type_Bear, 
         type_Squirrel
@@ -60,12 +61,16 @@ namespace lab7 {
         requires Container<T<NPC*>>
     class SetNPCsInAttackRangeVisitor;
 
+    using visitor_ptr = std::shared_ptr<Visitor>;
+
 // Observers'
     class Observer;
     template <typename MessageBroker>
     class EventWriterObserver;
     template <typename MessageBroker>
     class KillEventObserver;
+
+    using observer_ptr = std::shared_ptr<Observer>;
 
 // Message brokers
     class ConsoleMessageBroker;

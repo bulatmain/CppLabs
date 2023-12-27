@@ -8,20 +8,20 @@ namespace lab7 {
     template<template <class> class Allocator = std::allocator>
     class CreatorOfBear : public CreatorOfNPC {
     public:
+        using super = CreatorOfNPC;
+
         CreatorOfBear() = default;
         virtual void createNPC();
         void readFromFile(const std::string& filename);
         void initialize(
             const std::string& name,
     	    point<size_t> pos,
-            statusOfNPC status,
-            NPC* attackTarget
+            statusOfNPC status
         );
         void construct(
             const std::string& name,
     	    point<size_t> pos,
-            statusOfNPC status,
-            NPC* attackTarget
+            statusOfNPC status
         );
     protected:
         Allocator<Bear> allocator;
@@ -47,7 +47,7 @@ void lab7::CreatorOfBear<Allocator>::readFromFile(const std::string& filename) {
     point<size_t> pos;
     statusOfNPC status;
     readVariables(name, pos, status, filename);
-    construct(name, pos, status, nullptr);
+    construct(name, pos, status);
 }
 
 template <template <class> class Allocator>
@@ -73,15 +73,13 @@ template <template <class> class Allocator>
 void lab7::CreatorOfBear<Allocator>::construct(
             const std::string& name,
     	    point<size_t> pos,
-            statusOfNPC status,
-            lab7::NPC* attackTarget 
+            statusOfNPC status
 ) {
     createNPC();
     initialize(
         name,
         pos,
-        status,
-        attackTarget
+        status
     );
 }
 
@@ -90,25 +88,23 @@ void lab7::CreatorOfBear<Allocator>::createNPC() {
     using traits = std::allocator_traits<Allocator<Bear>>;
     lab7::Bear* bear = traits::allocate(allocator, 1);
     traits::construct(allocator, bear);
-    npc = bear;
+    npc = std::shared_ptr<NPC>(bear);
 }
 
 template <template <class> class Allocator>
 void lab7::CreatorOfBear<Allocator>::initialize(
             const std::string& name,
     	    point<size_t> pos,
-            statusOfNPC status,
-            lab7::NPC* attackTarget 
+            statusOfNPC status
 ) {
     if (npc == nullptr) {
         throw std::logic_error("Error: trying initialize not existing object\n");
     }
     using traits = std::allocator_traits<Allocator<Bear>>;
-    lab7::Bear* bear = dynamic_cast<lab7::Bear*>(npc);
+    lab7::Bear* bear = dynamic_cast<lab7::Bear*>(npc.get());
     traits::construct(allocator, &bear->name, name);
     traits::construct(allocator, &bear->pos, pos);
     traits::construct(allocator, &bear->status, status);
-    traits::construct(allocator, &bear->attackTarget, attackTarget);
 }
 
 

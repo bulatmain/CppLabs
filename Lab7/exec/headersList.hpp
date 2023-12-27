@@ -1,6 +1,6 @@
-#include "creators/creatorOfOgre.hpp"
+// #include "creators/creatorOfOgre.hpp"
 #include "creators/creatorOfBear.hpp"
-#include "creators/creatorOfSquirrel.hpp"
+// #include "creators/creatorOfSquirrel.hpp"
 #include "npc/ogre.hpp"
 #include "npc/bear.hpp"
 #include "npc/squirrel.hpp"

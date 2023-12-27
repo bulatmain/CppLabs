@@ -17,29 +17,33 @@ namespace lab7 {
     	point<size_t> pos;
         statusOfNPC status;
 
-    	std::list<Observer*> observers;
+    	std::list<observer_ptr> observers;
 
     public:
-    	virtual void attachObserver(Observer* observer);
+    	virtual void attachObserver(observer_ptr observer);
 
-    	virtual void detachObserver(Observer* observer);
+    	virtual void detachObserver(observer_ptr observer);
 
         virtual void notifyObservers() const;
 
-    	virtual void accept(Visitor* v) = 0;
+    	virtual void accept(visitor_ptr v) = 0;
 
         virtual typesOfNPCs identify();
 
         virtual ~NPC() = 0;
+
+        virtual int getMovementDistance() = 0;
+        virtual int getAttackDistance() = 0;
+
     };
 
 };
 
-void lab7::NPC::attachObserver(lab7::Observer* observer) {
+void lab7::NPC::attachObserver(lab7::observer_ptr observer) {
     observers.emplace_back(observer);
 }
 
-void lab7::NPC::detachObserver(lab7::Observer* observer) {
+void lab7::NPC::detachObserver(lab7::observer_ptr observer) {
     observers.erase(std::find(observers.begin(), observers.end(), observer));
 }
 

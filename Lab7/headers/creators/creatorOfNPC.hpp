@@ -3,16 +3,17 @@
 #define CREATOR_OF_NPC
 
 #include <fstream>
+#include <memory>
 #include "declarations/declarations.hpp"
 
 namespace lab7 {
     class CreatorOfNPC {
     public:
-        NPC* getNPC();
+        npc_ptr&& getNPC();
         virtual void createNPC() = 0;
 
     protected:
-        NPC* npc = nullptr;
+        npc_ptr npc = nullptr;
     
     protected:
         virtual void readName(std::string& name, std::ifstream& fin);
@@ -27,10 +28,8 @@ namespace lab7 {
 #include "npc/npc.hpp"
 #include "auxiliry/point.hpp"
 
-lab7::NPC* lab7::CreatorOfNPC::getNPC() {
-    NPC* _npc = npc;
-    npc = nullptr;
-    return _npc;
+lab7::npc_ptr&& lab7::CreatorOfNPC::getNPC() {
+    return std::move(npc);
 }
 
 void lab7::CreatorOfNPC::readName(std::string& name, std::ifstream& fin) {

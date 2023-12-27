@@ -86,7 +86,7 @@ void lab7::CreatorOfSquirrel<Allocator>::createNPC() {
     using traits = std::allocator_traits<Allocator<Squirrel>>;
     lab7::Squirrel* sq = traits::allocate(allocator, 1);
     traits::construct(allocator, sq);
-    npc = sq;
+    npc = npc_ptr(sq);
 }
 
 template <template <class> class Allocator>
@@ -99,7 +99,7 @@ void lab7::CreatorOfSquirrel<Allocator>::initialize(
         throw std::logic_error("Error: trying initialize not existing object\n");
     }
     using traits = std::allocator_traits<Allocator<Squirrel>>;
-    lab7::Squirrel* squirrel = dynamic_cast<lab7::Squirrel*>(npc);
+    lab7::Squirrel* squirrel = dynamic_cast<lab7::Squirrel*>(npc.get());
     traits::construct(allocator, &squirrel->name, name);
     traits::construct(allocator, &squirrel->pos, pos);
     traits::construct(allocator, &squirrel->status, status);

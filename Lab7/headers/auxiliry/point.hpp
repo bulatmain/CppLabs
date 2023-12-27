@@ -3,6 +3,7 @@
 #define POINT_H
 
 #include <cmath>
+#include <string>
 
 #include "declarations/declarations.hpp"
 
@@ -12,6 +13,10 @@ namespace lab7 {
     struct point {
         T x;
         T y;
+
+        std::string to_str() {
+            return "{ " + std::to_string(x) + ", " + std::to_string(y) + " }";
+        }
     };
 
     template <Number T>

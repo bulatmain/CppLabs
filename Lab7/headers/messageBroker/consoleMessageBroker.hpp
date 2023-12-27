@@ -14,6 +14,12 @@ namespace lab7 {
         ConsoleMessageBroker(mutex_type_ptr mutex_ptr) 
             : super(mutex_ptr) {}
 
+        ConsoleMessageBroker(const ConsoleMessageBroker& other) 
+            : super(other.mutex_ptr) {}
+
+        ConsoleMessageBroker(ConsoleMessageBroker&& other) 
+            : super(std::move(other.mutex_ptr)) {}
+
         void unsafeSendMessage(const std::string& message) {
             std::cout << message;
         }
