@@ -8,6 +8,8 @@ namespace lab7 {
     template<template <class> class Allocator = std::allocator>
     class CreatorOfOgre : public CreatorOfNPC {
     public:
+        using super = CreatorOfNPC;
+
         CreatorOfOgre() = default;
         virtual void createNPC();
         void readFromFile(const std::string& filename);
@@ -23,6 +25,7 @@ namespace lab7 {
         );
     protected:
         Allocator<Ogre> allocator;
+
     private:
         CreatorOfOgre(const CreatorOfOgre&);
         CreatorOfOgre& operator=(const CreatorOfOgre&);
@@ -85,7 +88,7 @@ void lab7::CreatorOfOgre<Allocator>::createNPC() {
     using traits = std::allocator_traits<Allocator<Ogre>>;
     lab7::Ogre* ogre = traits::allocate(allocator, 1);
     traits::construct(allocator, ogre);
-    npc = npc_ptr(ogre);
+    npc = std::shared_ptr<NPC>(ogre);
 }
 
 template <template <class> class Allocator>
@@ -98,12 +101,11 @@ void lab7::CreatorOfOgre<Allocator>::initialize(
         throw std::logic_error("Error: trying initialize not existing object\n");
     }
     using traits = std::allocator_traits<Allocator<Ogre>>;
-    lab7::Ogre* ogre = static_cast<lab7::Ogre*>(npc.get());
+    lab7::Ogre* ogre = dynamic_cast<lab7::Ogre*>(npc.get());
     traits::construct(allocator, &ogre->name, name);
     traits::construct(allocator, &ogre->pos, pos);
     traits::construct(allocator, &ogre->status, status);
 }
-
 
 
 #endif

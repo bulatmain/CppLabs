@@ -1,95 +1,78 @@
 #include <gtest/gtest.h>
-#include "../exec/headersList.hpp"
+#include "../exec/gameModel.hpp"
 
 using namespace lab7;
 
-TEST(CreatorOfNPC, ReadNPC) {
-    CreatorOfOgre creatorOfOgre;
-    creatorOfOgre.readFromFile("ogre_file");
-    NPC* ogre = creatorOfOgre.getNPC();
-
-    ASSERT_TRUE(ogre->name == "La Ogre!");
-    ASSERT_TRUE(ogre->pos.x == 1 && ogre->pos.y == 1);
-    ASSERT_TRUE(ogre->status == ALIVE);
-}
-
-TEST(CreatorOfNPC, CreateFromArguments) {
+TEST(Creators, CreateFromArguments) {
     CreatorOfBear creatorOfBear;
-    creatorOfBear.construct("La Bear!", {1, 2}, ALIVE, nullptr);
+    creatorOfBear.construct("La Bear!", {1, 2}, ALIVE);
 
-    NPC* bear = creatorOfBear.getNPC();
-
+    npc_ptr bear = creatorOfBear.getNPC();
 
     ASSERT_TRUE(bear->name == "La Bear!");
     ASSERT_TRUE(bear->pos.x == 1 && bear->pos.y == 2);
     ASSERT_TRUE(bear->status == ALIVE);
 }
 
-TEST(Visitor, SetNPCsInAttackRangeVisitor) {
-    CreatorOfOgre creatorOfOgre;
-    creatorOfOgre.readFromFile("ogre_file");
-    NPC* ogre = creatorOfOgre.getNPC();
+TEST(AuxiliryFunctions, isInRange1) {
+    CreatorOfBear cob;
+    cob.construct("Bear", {0, 0}, ALIVE);
+    npc_ptr bear = cob.getNPC();
 
-    CreatorOfBear creatorOfBear;
-    creatorOfBear.construct("La Bear!", {1, 2}, ALIVE, nullptr);
+    CreatorOfSquirrel cos;
+    cos.construct("Squirrel", {0, 5}, ALIVE);
+    npc_ptr squirrel = cos.getNPC();
 
-    NPC* bear = creatorOfBear.getNPC();
-
-    CreatorOfSquirrel creatorOfSquirrel;
-    creatorOfSquirrel.construct("La Squirrel!", {2, 1}, ALIVE);
-
-    NPC* squirrel = creatorOfSquirrel.getNPC();
-
-    std::list<NPC*> npcs = {ogre, bear, squirrel};
-
-    SetNPCsInAttackRangeVisitor<std::list> setAttacKTargetsVisitor(&npcs, 10);
-
-    for (auto npc : npcs) {
-        npc->accept(&setAttacKTargetsVisitor);
-    }
-
-    AttackerNPC* aOgre = dynamic_cast<AttackerNPC*>(ogre);
-    AttackerNPC* aBear = dynamic_cast<AttackerNPC*>(bear);
-
-    ASSERT_TRUE(aOgre->potentialAttackTargets == std::list<NPC*>({bear, squirrel}));
-    ASSERT_TRUE(aBear->potentialAttackTargets == std::list<NPC*>({ogre, squirrel}));
-
+    ASSERT_TRUE(isInRange(bear, squirrel));
 }
 
-TEST(Visitor, SetAttackTrgetVisitor) {
-    CreatorOfOgre creatorOfOgre;
-    creatorOfOgre.readFromFile("ogre_file");
-    NPC* ogre = creatorOfOgre.getNPC();
+TEST(AuxiliryFunctions, isInRange2) {
+    CreatorOfBear cob;
+    cob.construct("Bear", {0, 0}, ALIVE);
+    npc_ptr bear = cob.getNPC();
 
-    CreatorOfBear creatorOfBear;
-    creatorOfBear.construct("La Bear!", {1, 2}, ALIVE, nullptr);
+    CreatorOfSquirrel cos;
+    cos.construct("Squirrel", {0, 11}, ALIVE);
+    npc_ptr squirrel = cos.getNPC();
 
-    NPC* bear = creatorOfBear.getNPC();
+    ASSERT_FALSE(isInRange(bear, squirrel));
+}
 
-    CreatorOfSquirrel creatorOfSquirrel;
-    creatorOfSquirrel.construct("La Squirrel!", {2, 1}, ALIVE);
+TEST(AuxiliryFunctions, WillNotOverflow1_true) {
+    size_t a = SIZE_MAX - 1;
+    int b = 1;
 
-    NPC* squirrel = creatorOfSquirrel.getNPC();
+    ASSERT_TRUE(willNotOverflow(a, b));
+}
 
-    std::list<NPC*> npcs = {ogre, bear, squirrel};
+TEST(AuxiliryFunctions, WillNotOverflow2_false) {
+    size_t a = SIZE_MAX - 1;
+    int b = 2;
 
-    SetNPCsInAttackRangeVisitor<std::list> setAttacKTargetsVisitor(&npcs, 10);
+    ASSERT_FALSE(willNotOverflow(a, b));
+}
 
-    for (auto npc : npcs) {
-        npc->accept(&setAttacKTargetsVisitor);
-    }
+TEST(AuxiliryFunctions, WillNotOverflow3_false) {
+    size_t a = 10;
+    int b = -11;
 
-    SetAttackTargetVisitor setAttackTargetVisitor;
+    ASSERT_FALSE(willNotOverflow(a, b));
+}
 
-    for (auto npc : npcs) {
-        npc->accept(&setAttackTargetVisitor);
-    }
+TEST(AuxiliryFunctions, newX1) {
+    size_t edge_x = 100;
+    size_t old_x = 90;
+    int dx = 5;
 
-    AttackerNPC* aOgre = dynamic_cast<AttackerNPC*>(ogre);
-    AttackerNPC* aBear = dynamic_cast<AttackerNPC*>(bear);
+    ASSERT_EQ(newX(old_x, dx, edge_x), old_x + dx);
+}
 
-    ASSERT_TRUE(aOgre->attackTarget == bear);
-    ASSERT_TRUE(aBear->attackTarget == ogre);
+TEST(AuxiliryFunctions, newX2) {
+    size_t edge_x = 100;
+    size_t old_x = 90;
+    int dx = 11;
+
+    ASSERT_EQ(newX(old_x, dx, edge_x), old_x);
 }
 
 int main(int argc, char** argv) {
